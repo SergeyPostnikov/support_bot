@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import random
 from run import detect_intent_texts
+import time
 
 
 def df_handle(event, vk_api, project_id):
@@ -16,7 +17,7 @@ def df_handle(event, vk_api, project_id):
             [user_message], 
             language_code
         )
-        
+
         if response.query_result.intent.is_fallback:
             return
 
@@ -37,5 +38,6 @@ if __name__ == '__main__':
     longpoll = VkLongPoll(vk_session)
 
     for event in longpoll.listen():
+        time.sleep(3)
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             df_handle(event, vk_api, project_id)
