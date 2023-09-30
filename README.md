@@ -17,7 +17,7 @@ Make sure to obtain these tokens and identifiers from the respective platforms a
 1. Clone this repository to your local machine:
 
     ```bash
-    git clone https://github.com/SergeyPostnikov/support-bots.git
+    git clone https://github.com/SergeyPostnikov/support-bot.git
     ```
 
 2. Install the required Python libraries by running:
