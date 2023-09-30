@@ -16,6 +16,9 @@ def df_handle(event, vk_api, project_id):
             [user_message], 
             language_code
         )
+        
+        if response.query_result.intent.is_fallback:
+            return
 
         vk_api.messages.send(
             user_id=event.user_id,
