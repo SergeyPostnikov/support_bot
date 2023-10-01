@@ -1,8 +1,23 @@
+import logging
+
 from google.cloud import api_keys_v2
-from google.cloud.api_keys_v2 import Key
-import os
-from dotenv import load_dotenv
 from google.cloud import dialogflow
+from google.cloud.api_keys_v2 import Key
+
+import google.api_core.exceptions
+
+logger = logging.getLogger(__file__)
+
+
+class TelegramLogsHandler(logging.Handler):
+    def __init__(self, tg_bot, chat_id):
+        super().__init__()
+        self.chat_id = chat_id
+        self.tg_bot = tg_bot
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.tg_bot.send_message(chat_id=self.chat_id, text=log_entry)
 
 
 def create_api_key(project_id: str, suffix: str) -> Key:
@@ -37,28 +52,16 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
-    # print("Session path: {}\n".format(session))
+    try:
+        for text in texts:
+            text_input = dialogflow.TextInput(text=text, language_code=language_code)
 
-    for text in texts:
-        text_input = dialogflow.TextInput(text=text, language_code=language_code)
+            query_input = dialogflow.QueryInput(text=text_input)
 
-        query_input = dialogflow.QueryInput(text=text_input)
+            response = session_client.detect_intent(
+                request={"session": session, "query_input": query_input}
+            )
 
-        response = session_client.detect_intent(
-            request={"session": session, "query_input": query_input}
-        )
-
-    return response
-
-
-if __name__ == '__main__':
-    load_dotenv()
-    project_id = os.getenv('PROJECT_ID')
-    # print(create_api_key(project_id, suffix='helper-bot-key'))
-
-    detect_intent_texts(
-        project_id=project_id,
-        session_id=12345678,
-        texts=['Привет'],
-        language_code='ru'
-    )
+        return response
+    except google.api_core.exceptions.GoogleAPICallError as err:
+        logger.error(f"Dialogflow API error: {err}")
