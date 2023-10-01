@@ -3,6 +3,10 @@
 ## Overview
 This project consists of support bots for VK (VKontakte) and Telegram messaging platforms. These bots are designed to provide support to users in a group on VK and a channel on Telegram using the Dialogflow natural language understanding platform.
 
+
+<img src="https://dvmn.org/filer/canonical/1569214094/323/" width="35%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://dvmn.org/filer/canonical/1569214089/322/" width="35%" /> 
+
+
 ## Prerequisites
 Before you can run the support bots, you will need the following tokens and identifiers:
 
@@ -10,6 +14,7 @@ Before you can run the support bots, you will need the following tokens and iden
 - `PROJECT_ID`: Google Cloud Project ID
 - `GC_API_KEY`: Google Cloud API Key (for Dialogflow integration)
 - `VK_TOKEN`: VKontakte Community Token
+- `GOOGLE_APPLICATION_CREDENTIALS`: Google Application Credentials JSON file path (for Google Cloud services)
 
 Make sure to obtain these tokens and identifiers from the respective platforms and services.
 
