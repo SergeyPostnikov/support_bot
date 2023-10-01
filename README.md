@@ -10,11 +10,14 @@ This project consists of support bots for VK (VKontakte) and Telegram messaging 
 ## Prerequisites
 Before you can run the support bots, you will need the following tokens and identifiers:
 
-- `TG_TOKEN`: Telegram Bot Token
+- `SUPPORT_BOT_KEY`: Telegram Bot Token
 - `PROJECT_ID`: Google Cloud Project ID
 - `GC_API_KEY`: Google Cloud API Key (for Dialogflow integration)
 - `VK_TOKEN`: VKontakte Community Token
 - `GOOGLE_APPLICATION_CREDENTIALS`: Google Application Credentials JSON file path (for Google Cloud services)
+
+- `LOGGER_BOT_KEY`: Your crush reporter bot token
+- `TG_ADMIN_ID`: Your id for recieving crush reports
 
 Make sure to obtain these tokens and identifiers from the respective platforms and services.
 
