@@ -8,12 +8,11 @@ def create_intent_from_json(project_id, json_file_path):
     intents_client = dialogflow.IntentsClient()
 
     with open(json_file_path, "r", encoding='UTF-8') as json_file:
-        data = json.load(json_file)
+        intents = json.load(json_file)
 
-    for intent_name, intent_data in data.items():
-        display_name = intent_name
-        questions = intent_data["questions"]
-        answer = intent_data["answer"]
+    for intent_name, intent_value in intents.items():
+        questions = intent_value["questions"]
+        answer = intent_value["answer"]
 
         parent = dialogflow.AgentsClient.agent_path(project_id)
         training_phrases = []
@@ -27,7 +26,7 @@ def create_intent_from_json(project_id, json_file_path):
         message = dialogflow.Intent.Message(text=text)
 
         intent = dialogflow.Intent(
-            display_name=display_name, 
+            display_name=intent_name, 
             training_phrases=training_phrases, 
             messages=[message]
         )
@@ -36,7 +35,7 @@ def create_intent_from_json(project_id, json_file_path):
             request={"parent": parent, "intent": intent}
         )
 
-        print(f"Intent '{display_name}' created: {response}")
+        print(f"Intent '{intent_name}' created: {response}")
 
 
 if __name__ == "__main__":

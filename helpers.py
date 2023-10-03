@@ -44,7 +44,7 @@ def create_api_key(project_id: str, suffix: str) -> Key:
     return response
 
 
-def detect_intent_texts(project_id, session_id, texts, language_code):
+def detect_intent_text(project_id, session_id, text, language_code):
     """Returns the result of detect intent with texts as inputs.
 
     Using the same `session_id` between requests allows continuation
@@ -53,15 +53,11 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
     try:
-        for text in texts:
-            text_input = dialogflow.TextInput(text=text, language_code=language_code)
-
-            query_input = dialogflow.QueryInput(text=text_input)
-
-            response = session_client.detect_intent(
-                request={"session": session, "query_input": query_input}
-            )
-
+        text_input = dialogflow.TextInput(text=text, language_code=language_code)
+        query_input = dialogflow.QueryInput(text=text_input)
+        response = session_client.detect_intent(
+            request={"session": session, "query_input": query_input}
+        )
         return response
     except google.api_core.exceptions.GoogleAPICallError as err:
         logger.error(f"Dialogflow API error: {err}")

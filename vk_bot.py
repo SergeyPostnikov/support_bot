@@ -7,7 +7,7 @@ import vk_api
 
 from dotenv import load_dotenv
 from helpers import TelegramLogsHandler
-from helpers import detect_intent_texts
+from helpers import detect_intent_text
 from requests.exceptions import ConnectionError
 from vk_api.longpoll import VkEventType
 from vk_api.longpoll import VkLongPoll
@@ -20,10 +20,10 @@ def df_handle(event, vk_api, project_id):
     user_message = event.text
     if user_message:
         language_code = 'ru'  
-        response = detect_intent_texts(
+        response = detect_intent_text(
             project_id, 
             event.user_id, 
-            [user_message], 
+            user_message, 
             language_code
         )
 

@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 from telegram.ext import Filters
 from telegram.ext import MessageHandler
 from telegram.ext import Updater
-from helpers import detect_intent_texts, TelegramLogsHandler
+from helpers import detect_intent_text, TelegramLogsHandler
 import logging
 import telegram
 
@@ -13,12 +13,11 @@ logger = logging.getLogger(__file__)
 
 
 def df_handle(update: Update, context: CallbackContext) -> None:
-    texts = [update.message.text]
     try:
-        response = detect_intent_texts(
+        response = detect_intent_text(
             project_id=project_id,
             session_id=12345678,
-            texts=texts,
+            text=update.message.text,
             language_code='ru'
         )
         update.message.reply_text(response.query_result.fulfillment_text)
