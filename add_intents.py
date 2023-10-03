@@ -1,7 +1,9 @@
+import argparse
 import json
-from google.cloud import dialogflow
 import os
+
 from dotenv import load_dotenv
+from google.cloud import dialogflow
 
 
 def create_intent_from_json(project_id, json_file_path):
@@ -38,7 +40,23 @@ def create_intent_from_json(project_id, json_file_path):
         print(f"Intent '{intent_name}' created: {response}")
 
 
+def get_arguments():
+    parser = argparse.ArgumentParser(
+        prog='intent learner',
+        epilog='usage: add_intents.py [--json_path questions.json]',
+    )
+    
+    parser.add_argument(
+        '--json_path',
+        help='Path where questions.json placed',
+        default='questions.json'
+    )
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == "__main__":
+    args = get_arguments()
     load_dotenv()
     project_id = os.getenv('PROJECT_ID')
-    create_intent_from_json(project_id, "questions.json")
+    create_intent_from_json(project_id, args.json_path)
