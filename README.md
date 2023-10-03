@@ -56,11 +56,50 @@ Edit the configuration files or environment variables with your tokens and ident
 
 3. Your bots are now active and ready to provide support in your VK group and Telegram channel.
 
-## Dialogflow Integration
-These bots use Dialogflow for natural language understanding and responses. Make sure you have configured Dialogflow intents and entities to handle user queries effectively.
+## add_intent.py
+These bots use Dialogflow for natural language understanding and responses. Make sure you have configured Dialogflow intents and entities to handle user queries effectively. The 'add_intent.py' is a Python script that enables the creation of intents in Google Cloud Dialogflow from a JSON file containing questions and answers. This script is particularly useful for setting up responses to common user queries in your chatbot or virtual assistant.
+
+## Prerequisites
+
+- `Google Cloud SDK`: Installed and authenticated.
+- `Dialogflow` Agent: Set up in your Google Cloud project.
+- `JSON File`: A JSON file containing the questions and answers you wish to use for intents.
+
+for usage create a JSON file (e.g., questions.json) containing the intents and their corresponding questions and answers in the following format:
+```
+{
+    "Intent Name 1": {
+        "questions": [
+            "Question 1",
+            "Question 2",
+            ...
+        ],
+        "answer": "Answer to Intent 1"
+    },
+    "Intent Name 2": {
+        "questions": [
+            "Question 1",
+            "Question 2",
+            ...
+        ],
+        "answer": "Answer to Intent 2"
+    },
+    ...
+}
+
+```
+### Usage:
+
+```bash
+python3 add_intents.py [--json_path questions.json]
+```
+--json_path (optional): Path to the JSON file containing intents. The default is questions.json in the script's directory.
+
+## Google Cloud Services
+The `GOOGLE_APPLICATION_CREDENTIALS` environment variable should point to your Google Cloud service account key JSON file. Ensure it is correctly set up to enable Google Cloud service integration.
 
 ## Contributing
 Feel free to contribute to this project by opening issues or submitting pull requests. Your contributions are highly appreciated!
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## Project Goals
+This project was created for educational purposes, aiming to demonstrate the integration of Google Cloud DialogFlow with both VK and Telegram bots.
