@@ -1,11 +1,16 @@
 import os
+
+import google.api_core.exceptions
+
 from dotenv import load_dotenv
+from helpers import detect_intent_text
+from log_handler import TelegramLogsHandler
 from telegram import Update
 from telegram.ext import CallbackContext
 from telegram.ext import Filters
 from telegram.ext import MessageHandler
 from telegram.ext import Updater
-from helpers import detect_intent_text, TelegramLogsHandler
+
 import logging
 import telegram
 
@@ -21,6 +26,9 @@ def df_handle(update: Update, context: CallbackContext) -> None:
             language_code='ru'
         )
         update.message.reply_text(response.query_result.fulfillment_text)
+    except google.api_core.exceptions.GoogleAPICallError as err:
+        logger.error(f"Dialogflow API error: {err}")
+
     except Exception as exc:
         logger.error(f"Error in message handling: {exc}")
 
@@ -30,6 +38,7 @@ if __name__ == '__main__':
     log_reciever_id = os.getenv('TG_ADMIN_ID')
     logger_bot_token = os.getenv('LOGGER_BOT_KEY')
     logger_bot = telegram.Bot(token=logger_bot_token)
+
     logging.basicConfig(level=logging.ERROR)
     logger.setLevel(logging.DEBUG)
     logger.addHandler(TelegramLogsHandler(logger_bot, log_reciever_id))

@@ -1,3 +1,5 @@
+import google.api_core.exceptions
+
 import logging
 import os
 import random
@@ -6,12 +8,12 @@ import time
 import vk_api
 
 from dotenv import load_dotenv
-from helpers import TelegramLogsHandler
 from helpers import detect_intent_text
+from log_handler import TelegramLogsHandler
 from requests.exceptions import ConnectionError
+from vk_api.exceptions import VkApiError
 from vk_api.longpoll import VkEventType
 from vk_api.longpoll import VkLongPoll
-from vk_api.exceptions import VkApiError
 
 logger = logging.getLogger(__file__)
 
@@ -58,7 +60,8 @@ if __name__ == '__main__':
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 df_handle(event, vk_api, project_id)
-                
+    except google.api_core.exceptions.GoogleAPICallError as err:
+        logger.error(f"Dialogflow API error: {err}")            
     except VkApiError as err:
         logging.error(f"Vk api error: {err}")
     except ConnectionError as err:
