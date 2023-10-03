@@ -24,7 +24,7 @@ def df_handle(event, vk_api, project_id):
         language_code = 'ru'  
         response = detect_intent_text(
             project_id, 
-            event.user_id, 
+            f'vk-{event.user_id}', 
             user_message, 
             language_code
         )

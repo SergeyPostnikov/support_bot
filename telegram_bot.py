@@ -21,7 +21,7 @@ def df_handle(update: Update, context: CallbackContext) -> None:
     try:
         response = detect_intent_text(
             project_id=project_id,
-            session_id=12345678,
+            session_id=f'tg-{update.effective_user.id}',
             text=update.message.text,
             language_code='ru'
         )
